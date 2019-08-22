@@ -1,6 +1,7 @@
 import React from 'react';
-import {Result, Button} from 'antd';
-import {PageHeaderWrapper} from '@ant-design/pro-layout';
+import { Result, Button } from 'antd';
+import { PageHeaderWrapper } from '@ant-design/pro-layout';
+import Style from './style.less';
 
 const workplace = () => (
   <PageHeaderWrapper>
@@ -15,7 +16,10 @@ const workplace = () => (
         <Button key="buy">Buy Again</Button>,
       ]}
     />
+    <div className={Style.hello}>
+      <span className={Style.deleted}>Hello World</span>
+    </div>
   </PageHeaderWrapper>
 );
 
-export default workplace
+export default workplace;

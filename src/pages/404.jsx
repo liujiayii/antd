@@ -5,14 +5,14 @@ import router from 'umi/router'; // 这里应该使用 antd 的 404 result 组�
 
 const NoFoundPage = () => (
   <Result
-  status="404"
-  title="404"
-  subTitle="Sorry, the page you visited does not exist."
-  extra={
-    <Button type="primary" onClick={() => router.push('/')}>
-      Back Home
-    </Button>
-  }
+    status="404"
+    title="404"
+    subTitle="Sorry, the page you visited does not exist."
+    extra={
+      <Button type="primary" onClick={() => router.push('/')}>
+        Back Home
+      </Button>
+    }
   />
 );
 

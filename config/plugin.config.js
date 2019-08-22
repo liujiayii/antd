@@ -68,10 +68,17 @@ export default config => {
       cacheGroups: {
         vendors: {
           test: module => {
-            const packageName = getModulePackageName(module);
+            const packageName = getModulePackageName(module) || '';
 
             if (packageName) {
-              return ['bizcharts', '@antv_data-set'].indexOf(packageName) >= 0;
+              return [
+                'bizcharts',
+                'gg-editor',
+                'g6',
+                '@antv',
+                'gg-editor-core',
+                'bizcharts-plugin-slider',
+              ].includes(packageName);
             }
 
             return false;

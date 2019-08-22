@@ -3,10 +3,10 @@ import defaultSettings from './defaultSettings'; // https://umijs.org/config/
 import slash from 'slash2';
 import webpackPlugin from './plugin.config';
 
-const {pwa, primaryColor} = defaultSettings; // preview.pro.ant.design only do not use in your production ;
+const { pwa, primaryColor } = defaultSettings; // preview.pro.ant.design only do not use in your production ;
 // preview.pro.ant.design 专用环境变量，请不要在你的项目中使用它。
 
-const {ANT_DESIGN_PRO_ONLY_DO_NOT_USE_IN_YOUR_PRODUCTION} = process.env;
+const { ANT_DESIGN_PRO_ONLY_DO_NOT_USE_IN_YOUR_PRODUCTION } = process.env;
 const isAntDesignProPreview = ANT_DESIGN_PRO_ONLY_DO_NOT_USE_IN_YOUR_PRODUCTION === 'site';
 const plugins = [
   [
@@ -71,8 +71,6 @@ if (isAntDesignProPreview) {
 }
 
 export default {
-  base: '/docs/',
-  publicPath: 'https://liujiayii.github.io/antd-demo/',
   plugins,
   block: {
     defaultGitUrl: 'https://github.com/ant-design/pro-blocks',
@@ -84,25 +82,32 @@ export default {
   devtool: isAntDesignProPreview ? 'source-map' : false,
   // umi routes: https://umijs.org/zh/guide/router.html
   routes: [
-    {path: '/', redirect: '/login'},
+    { path: '/', redirect: '/user/login' },
     {
-      path: '/login', component: '../layouts/UserLayout', Routes: ['src/pages/Authorized'],
+      path: '/user', component: '../layouts/UserLayout', Routes: ['src/pages/Authorized'],
       routes: [
-        {path: '/login', name: 'login', icon: 'smile', component: './login'},
+        { path: '/user/login', name: 'login', icon: 'smile', component: './login' },
       ],
     },
     {
-      path: '/', component: '../layouts/BasicLayout', Routes: ['src/pages/Authorized'],
+      path: '/',
+      component: '../layouts/BasicLayout',
+      Routes: ['src/pages/Authorized'],
+      authority: ['admin', 'user'],
       routes: [
-        {path: '/welcome', name: 'welcome', icon: 'home', component: './Welcome',},
+        { path: '/welcome', name: 'welcome', icon: 'home', component: './Welcome' },
         {
           path: '/dashboard', name: 'dashboard', icon: 'heart', routes: [
-            {path: '/dashboard/analysis', name: 'analysis', component: './analysis'},
-            {path: '/dashboard/monitor', name: 'monitor', component: './monitor'},
-            {path: '/dashboard/workplace', name: 'workplace', component: './workplace'},
-          ]
+            { path: '/dashboard/analysis', name: 'analysis', component: './Dashboard/Analysis' },
+            { path: '/dashboard/monitor', name: 'monitor', component: './Dashboard/Monitor' },
+            { path: '/dashboard/workplace', name: 'workplace', component: './Dashboard/Workplace' },
+          ],
         },
-        {component: './404',},
+        {
+          path: '/list', name: 'list', icon: 'bars', routes: [
+            { path: '/list/basic-list', name: 'basic-list', component: './List/basic-list' },
+          ],
+        },
       ],
     },
     {
@@ -151,13 +156,11 @@ export default {
     basePath: '/',
   },
   chainWebpack: webpackPlugin,
-  /*
   proxy: {
-    '/server/api/': {
-      target: 'https://preview.pro.ant.design/',
+    '/dev': {
+      target: 'https://08ad1pao69.execute-api.us-east-1.amazonaws.com',
       changeOrigin: true,
-      pathRewrite: { '^/server': '' },
+      /* pathRewrite: { '^/server': '' },*/
     },
   },
-  */
 };
